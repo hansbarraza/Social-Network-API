@@ -1,7 +1,7 @@
 const { Schema, model } = require('mongoose');
 const validator = require('validator');
 
-// Schema to create Student model
+// Schema to create User model
 const userSchema = new Schema({
     username: {
         type: String,
