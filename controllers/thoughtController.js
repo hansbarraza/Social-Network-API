@@ -3,13 +3,13 @@ const { Thought, User } = require('../models');
 const thoughtController = {
     //get all thoughts
     getThoughts(req, res) {
-            Thought.find({})
-                .then((thoughts) => res.json(thoughts))
-                .catch((err) => res.status(400).json(err))
+        Thought.find({})
+        .then((thoughts) => res.json(thoughts))
+        .catch((err) => res.status(400).json(err))
     },
     //get single thought by Id
     getSingleThought(req, res) {
-        User.findOne({ _id: params.thoughtId })
+        User.findOne({ _id: req.params.thoughtId })
         .select('-__v')
         .then((thoughtId) => !thoughtId ? res.status(400).json({message: 'No thought found by that Id'}) : res.json(thoughtId))
         .catch((err) => res.status(400).json(err));
@@ -25,13 +25,13 @@ const thoughtController = {
     },
     //update a thought
     updateThought(req, res) {
-        Thought.findOneAndUpdate({_id:params.thoughtId}, {$set: req.body}, {runValidators:true, new:true})
+        Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$set: req.body}, {runValidators:true, new:true})
         .then((updatedThought) => !updatedThought ? res.status(400).json({message: 'No thought found by that Id'}) : res.json(updatedThought))
         .catch((err) => res.status(400).json(err))
     },
     //delete thought and update users thought array
     deleteThought(req, res) {
-        Thought.findByIdAndDelete({_id:params.thoughtId})
+        Thought.findByIdAndDelete({_id: req.params.thoughtId})
         .then((thought) => !thought ? res.status(400).json({message: 'No thought found by that Id'}) : User.findOneAndUpdate({thought: req.params.thoughtId}, {$pull: {thoughts: req.params.thoughtId}}, {new: true}))
         .then((updatedUser) => !updatedUser ? res.status(400).json({message: 'Thought was deleted but no user found'}) : res.json(updatedUser))
         .catch((err) => res.status(400).json(err))
