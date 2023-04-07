@@ -3,8 +3,8 @@ const {
   getThoughts,
   getSingleThought,
   addThought,
-  deleteThought,
   updateThought,
+  deleteThought,
   addReaction,
   deleteReaction
 } = require('../../controllers/thoughtController.js');

@@ -7,7 +7,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// app.use(routes);
+app.use(routes);
 
 db.once('open', () => {
     console.log('MongoDB connection established successfully')
