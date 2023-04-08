@@ -9,7 +9,7 @@ const thoughtController = {
     },
     //get single thought by Id
     getSingleThought(req, res) {
-        User.findOne({ _id: req.params.thoughtId })
+        Thought.findOne({ _id: req.params.thoughtId })
         .select('-__v')
         .then((thoughtId) => !thoughtId ? res.status(400).json({message: 'No thought found by that Id'}) : res.json(thoughtId))
         .catch((err) => res.status(400).json(err));
@@ -18,7 +18,7 @@ const thoughtController = {
     addThought(req, res) {
         Thought.create(req.body)
         .then(({_id}) => {
-            return User.findOneAndUpdate({_id: body.userId}, {$push: {thoughts: _id}}, {new: true});
+            return User.findOneAndUpdate({_id: req.body.userId}, {$push: {thoughts: _id}}, {new: true});
         })
         .then((thoughtId) => !thoughtId ? res.status(400).json({message: 'No thought found by that Id'}) : res.json(thoughtId))
         .catch((err) => res.json(err))
@@ -38,7 +38,7 @@ const thoughtController = {
     },
     // add a reaction to the single thought array
     addReaction(req, res) {
-        Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$addToset: {reactions: req.body}}, {runValidators: true, new:true})
+        Thought.findOneAndUpdate({_id: req.params.thoughtId}, {$addToSet: {reactions: req.body}}, {runValidators: true, new:true})
         .then((reaction) => !reaction ? res.status(400).json({message: 'No thought by that id to add reaction to.'}) : res.json(reaction))
         .catch((err) => res.status(400).json(err))
     },

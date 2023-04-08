@@ -34,7 +34,8 @@ const userController = {
         .then((user) => !user ? res.status(400).json({message: 'No user found by that Id'}) : res.json(user))
         .catch((err) => res.status(400).json(err));
     },
-deleteUser(req, res) {
+    //delete a user by id
+    deleteUser(req, res) {
         User.findOneAndDelete({_id: req.params.userId})
         .then((user) => { !user ? res.status(400).json({message: 'No user found by that Id'}) :
         Thought.deleteMany({_id:{$in: user.thoughts}})
@@ -43,8 +44,6 @@ deleteUser(req, res) {
       })
         .catch((err) => res.status(400).json(err));
   },
-  
-  
     //add friend to user
     addFriend(req, res) {
         User.findOneAndUpdate({_id: req.params.userId}, {$addToSet: {friends: req.params.friendId}}, {new: true, runValidators: true})

@@ -3,9 +3,7 @@ const { Schema, model } = require('mongoose');
 
 //reaction schema in thought model
 const reactionSchema = new Schema ({
-    reationId: {
-        // type: Schema.Types.ObjectId,
-        // default: () => new Types.ObjectId()
+    reactionId: {
         type: ObjectID,
         default: () => new ObjectID()
     },
